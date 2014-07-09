@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/ico/favicon.png">
+
+    <title>Flexydial</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/navbar-static-top.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</script>
+  </head>
+
+  <body>
+
+    <!-- Static navbar -->
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Flexydial</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li class ="active"><a href="#">Contact</a></li>
+            <li class="dropdown">
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="login">login</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-12">
+          <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">Contact</li>
+          </ol>
+	  <e1 class="page-header">Contact </h1>
+        </div>
+      </div><!-- /.row -->
+
+      <div class="row">
+
+        <div class="col-sm-8">
+         <div class="jumbotron">
+          <input type="text"  id="chat" onkeypress="keypressInBox(this)" class="form-control">
+          <h2>Want to leave a message with us!</h2>
+          <p>Fill your details below.</p>
+            <form role="form" method="POST" action="">
+              <div class="row">
+                <div class="form-group col-lg-4">
+                  <label for="input1">Name</label>
+                  <input type="text" name="contact_name" class="form-control" id="input1">
+                </div>
+                <div class="form-group col-lg-4">
+                  <label for="input2">Email Address</label>
+                  <input type="email" name="contact_email" class="form-control" id="input2">
+                </div>
+                <div class="form-group col-lg-4">
+                  <label for="input3">Phone Number</label>
+                  <input type="phone" name="contact_phone" class="form-control" id="input3">
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group col-lg-12">
+                  <label for="input4">Message</label>
+                  <textarea name="contact_message" class="form-control" rows="6" id="input4"></textarea>
+                </div>
+                <div class="form-group col-lg-12">
+                  <input type="hidden" name="save" value="contact">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </form>
+         </div><!-- /.jumbotron -->
+        </div>
+
+        <div class="col-sm-4">
+          <h3>Buzzworks Business Services Pvt. Ltd.</h3>
+          <p>
+            C 91-92, 3rd Floor<br>
+            Sector 2, Noida, UP<br>
+          </p>
+          <p><i class="fa fa-phone"></i> Contact Number</abbr>: 8130560XXX</p>
+          <p><i class="fa fa-envelope-o"></i> E-Mail</abbr>: <a href="mailto:feedback@flexydial.com">feedback@flexydial.com</a></p>
+          <p><i class="fa fa-clock-o"></i> Timings</abbr>: Monday - Saturday: 10:00 AM to 6:00 PM</p>
+        </div>
+
+      </div><!-- /.row -->
+
+      <div class="col-lg-12">
+          <h2>Visit Us!</h2>
+          <!-- Embedded Google Map using an iframe - to select your location find it on Google maps and paste the link as the iframe src. If you want to use the Google Maps API instead then have at it! -->
+          <iframe width="100%" height="400px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?hl=en&amp;q=c91+sector+2,+Noida&amp;ie=UTF8&amp;ll=28.584107,77.314717&amp;spn=28.584107,77.314717&amp;t=m&amp;z=12&amp;output=embed"></iframe>
+        </div>
+    </div><!-- /.container -->
+
+    <div class="container">
+      <hr>
+
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p>Copyright &copy; Buzzworks 2014</p>
+          </div>
+        </div>
+      </footer>
+
+    </div><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="/socket.io/lib/socket.io.js"></script>
+    <script type="text/javascript">
+            var msg='';
+            var socket = io.connect('http://127.0.0.1/');
+            socket.on('news', function (data) {
+              document.getElementById('chat').value=data;
+             });
+            $(document).keypress(function(e) {
+                 if(e.which == 13) {
+                 msg = document.getElementById('chat').value;
+                 if(msg != '')
+                   {
+                   socket.emit('my other event', msg);
+                   document.getElementById('chat').value='';
+                   }
+               }
+            });
+            //socket.on('news', function (data) {
+            //console.log(data);
+            //});
+    </script>
+  </body>
+</html>

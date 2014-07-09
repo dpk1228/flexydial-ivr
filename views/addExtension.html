@@ -1,0 +1,108 @@
+        <div class="page-header" id ="addDidforVr">
+        </div>
+          <div class="table-responsive">
+              <div class="form-group">
+                  <label for="DID">Select Hosting Number</label>
+                  <select  name='didList' id="listDid" class="form-control" onchange="getDid();">
+                  </select>
+              </div>
+        <div id="results-table">
+            <table class="table table-hover table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th style="background-color: darkgray;">Hosting Number</th>
+                  <th style="background-color: darkgray;">Incoming Phone Number</th>
+                </tr>
+              </thead>
+              <tbody id = "extensionList"></tbody>
+            </table>
+        </div>
+        <label for="addExt">ADD EXTENSION :</label>
+	<form action="/extension/add" method="post" role="form" >
+              <div class="form-group col-sm-5">
+                  <label for="Extension">Extension</label>
+                  <input type="number" class="form-control" name="extension1" min="0" max="9999" placeholder="Enter the extension" required = "">
+              </div>
+              <div class="form-group col-sm-5">
+                  <label for="NumberForward">Number to be forwarded</label>
+                  <input type="number" class="form-control " name="number_forward1" min="7000000000" max="9999999999" placeholder="Enter Ftp User's Name" required = "">
+              </div>
+	      <div id="extension_number"></div>
+              <div class="form-actions pull-right"> 
+                  <input type=hidden value="1" id="noext" name="noext"></input>
+                  <input type=hidden  id="did_number" name="did_number"></input>
+                  <input type=button class="btn btn-primary" value="Add More Extensions" onclick="addFileField()"></input>
+                  <input type=submit id="add" class="btn btn-primary" align="right" value='Add'></input>
+                  <input type=reset class="btn" value="Reset">
+              </div>
+           </form>
+          </div>
+       </div>
+     </div>
+    </div>
+
+
+  <script type="text/javascript">
+      var i = 2;
+      jQuery(document).ready(function($) {
+      });
+      function addFileField(){
+	var newDiv = document.createElement('div');
+	var newDiv2 = document.createElement('div');
+	newDiv.className = "form-group col-sm-5";
+	newDiv2.className = "form-group col-sm-5";
+	var extension = document.createElement('input');
+	var number_frwrd = document.createElement('input');
+	extension.type = "number";
+	number_frwrd.type = "number";
+	extension.name = "extension"+i;
+	extension.min = "0";
+	extension.max = "9999";
+	number_frwrd.name = "number_forward"+i;
+	number_frwrd.min = "7000000000";
+	number_frwrd.max = "9999999999";
+        extension.className = "form-control ";
+        number_frwrd.className = "form-control ";
+	newDiv.appendChild(extension);
+	newDiv2.appendChild(number_frwrd);
+	document.getElementById('noext').value = i;
+	document.getElementById('extension_number').appendChild(newDiv);
+	document.getElementById('extension_number').appendChild(newDiv2);
+        i++;
+      }
+
+      function showHideCompById(id){
+        document.getElementById("welcome_text").style.display = 'none';
+        document.getElementById("welcome_audio").style.display = 'none';
+        document.getElementById(id).style.display = 'block';
+      }
+  function getDid(){
+         var did_number = $("#listDid option:selected").val();
+         document.getElementById("did_number").value = did_number;  
+         var dataString = '&did_number=' + did_number ;
+         window.status = "Please wait...";
+         document.body.style.cursor = "wait";
+         $.ajax({
+                    
+                    type: "POST",
+                    url: "/getExtension",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       document.getElementById("extensionList").innerHTML = msg;  
+        
+                    }
+         });
+      }
+        </script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="http://localhost:9090/socket.io/socket.io.js"></script>
+    <script src="/javascripts/delivery.js"></script>
+  </body>
+</html>

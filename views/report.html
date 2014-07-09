@@ -1,0 +1,208 @@
+       <div class="page-header">
+          <h3>Report</h3>
+          <ul class="pager">
+             <div id="pagination">
+            </div>
+          </ul>
+       </div>
+    <div>
+      <form action="/report" method="post" ><div class="row"><div class="col-sm-2">
+         <label>Phone Number</label><input id="incoming_phone_number" type="text" class="form-control"> </div>
+      <div class="col-sm-2">
+         <label>Sort By</label><select id="sort" class="form-control">
+            <option value="_id" selected="selected">id ▲</option>
+            <option value="-_id">id ▼</option>
+            <option value="duration">Duration  ▲</option>
+            <option value="-duraion">Duration ▼</option>
+            <option value="call_time">call_time  ▲</option>
+            <option value="-call_time">call_time ▼</option>
+            <option value="did_number">did_number ▲</option>
+            <option value="-did_number">did number ▼</option>
+            <option value="client_id">client name ▲</option>
+            <option value="-client_id">client name ▼</option>
+        </select></div>
+      <div class="col-sm-2">
+         <label>Limit</label><select id="limit" class="form-control">
+            <option value="10" selected="selected">10 items</option>
+            <option value="20" >20 items</option>
+            <option value="50">50 items</option>
+            <option value="100">100 items</option>
+      </select><br></div>
+      <div class="col-sm-2">
+         <label>From Date  </label><input size="16" type="text" id="fromDate" class="form-control form_datetime" readonly > </div>
+      <div class="col-sm-2">
+         <label>To Date  </label><input size="16" type="text" id="toDate"  class="form-control form_datetime" readonly >
+      </div>
+      <div class="row">
+        <input type=button id="Search" class="btn btn-primary"  style="padding-top: 36px;" onclick="getReport();"  value='Search'></input>
+        <input type=button id="downloadReport" class="btn btn-primary"  style="padding-top: 36px;" onclick="getReport('download');"  value='Download'></input></div>
+      </div>
+      </form></div>
+
+         <form action="/did/deleteDid" id="didForm"  method="post" onsubmit="return confirmDelete();" role="form">
+          <div id="results-table">
+            <table class="table table-hover table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th style="background-color: darkgray;"><label class="checkbox-inline">
+                        <input type="checkbox" id="selectAll" value="option1"> 
+                      </label></th>
+                  <th style="background-color: darkgray;">Hosting Number</th>
+                  <th style="background-color: darkgray;">Incoming Phone Number</th>
+                  <th style="background-color: darkgray;">Client Name</th>
+                  <th style="background-color: darkgray;">Call Time</th>
+                  <th style="background-color: darkgray;">Duration</th>
+                  <th style="background-color: darkgray;">No. Of Pulse</th>
+                  <th style="background-color: darkgray;">Hang Up Cause</th>
+                </tr>
+              </thead>
+              <tbody id = "report"></tbody>
+            </table>
+         <ul class="pager">
+  		<div id = "page"></div>
+	 </ul>
+          </form>
+     </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myTranscription" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title" id="myModalLabel">Transcription</h3>
+      </div>
+      <div class="modal-body">
+        <span id="transcription"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+    </div>
+
+<div class="modal fade" id="editaddressBook" tabindex="-3" role="dialog2" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title" id="myModalLabel">Edit Address Book</h3>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="/addContact" id="editContact" role="form" method="post">
+          <div class="form-group">
+            <label for="Name" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+             <input type="text" class="form-control" id="name" placeholder="Enter The Name">
+            </div>
+         </div>
+         <div class="form-group">
+           <label for="phone_number" class="col-sm-2 control-label">Phone Number</label>
+             <div class="col-sm-10">
+               <input type="number" class="form-control" id="phone_number" placeholder="Phone Number">
+             </div>
+        </div>
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+             <input type="email" class="form-control" id="email" placeholder="Email">
+            </div>
+         </div>
+         <div class="form-group">
+           <label for="CampanyName" class="col-sm-2 control-label">Company</label>
+             <div class="col-sm-10">
+               <input type="text" class="form-control" id="company" placeholder="Comapny Name">
+             </div>
+        </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+       <button class="btn btn-primary" data-dismiss="modal" id="InfroTextSubmit">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+    </div>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="/stylesheets/datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/stylesheets/datetimepicker/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+        showMeridian: 1
+    });
+    </script>
+    <script  type="text/javascript">
+        function addContact(phone_number){
+           document.getElementById("phone_number").value = phone_number;
+           $('#editaddressBook').modal('show');
+        }
+        function getReport(requestType,skip,limit){
+        //if(requestType === 'download'){alert(requestType);}
+        var phone_number = document.getElementById("incoming_phone_number").value;
+        var sort = $("#sort option:selected").val();
+        var limit = $("#limit option:selected").val();
+        var fromDate = document.getElementById("fromDate").value;
+        var toDate = document.getElementById("toDate").value;
+        var dataString = '&phone_number=' + phone_number + '&sort=' + sort +'&skip=' +skip + '&limit=' +limit +'&fromDate=' + fromDate + '&toDate='+toDate + '&requestType='+ requestType ;
+        //alert(dataString);
+        window.status = "Please wait...";
+        document.body.style.cursor = "wait";
+        $.ajax({
+
+                    type: "POST",
+                    url: "/report",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       if(msg != 'NOT DONE'){
+                           if(msg === ''){
+                             document.getElementById("report").innerHTML = "Sorry, no data  found !!!";
+                             }
+                           else{
+                              msg = msg.split("^");
+  
+                           if(requestType === 'download'){
+                             var csvContent = "data:text/csv;charset=utf-8,";
+                             csvContent += "Incoming Phone Number,Hosting Number,Call Time,Duration,No. Of Pulse,Hang Up Cause\n";
+                             csvContent += msg;
+                             var encodedUri = encodeURI(csvContent);
+                             var link = document.createElement("a");
+                             link.setAttribute("href", encodedUri);
+                             link.setAttribute("download",'report.csv');
+                             link.click(); 
+                           }
+                           else{
+                             document.getElementById("report").innerHTML = msg[0];  
+                             document.getElementById("pagination").innerHTML = msg[1];              
+                           }  
+                          }
+                        }
+                       else{
+                             document.getElementById("report").innerHTML = "Sorry, there was some error !!!";  
+                       }
+                    }
+           });
+     }
+    </script>
+    <script src="/javascripts/bootstrap.js"></script>
+  </body>
+</html>

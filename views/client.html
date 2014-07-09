@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/ico/favicon.png">
+
+    <title>Flexydial Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/navbar-static-top.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  <script type="text/javascript">
+  function confirmDelete(){
+             return confirm("Are You Sure Want To Delete This IVR !!!");
+  }
+  </script>
+
+  </head>
+
+  <body>
+
+    <!-- Static navbar -->
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Flexydial</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/logout">logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">
+    <div id='alertMsg'></div>
+    <div id="header">
+       <div class="page-header">
+            <button  name="addClient" class="btn btn-lg btn-primary pull-right"  value="addClient" onclick="location.href='/client/addClient';">Add Client</button>
+            <h1>Client List</h1>
+       </div></div>
+    <div id="filters">
+      <form class="filters"><div class="row"><div class="col-sm-3">
+         <label>Search by Client name</label><input name="client_name" type="text" class="form-control"></div>
+      <div class="col-sm-2">
+         <label>Sort By</label><select name="sort" class="form-control">
+            <option value="_id">id ▲</option>
+            <option value="-_id">id ▼</option>
+            <option value="client_name">client name ▲</option>
+            <option value="-client_name">client name ▼</option>
+        </select></div>
+      <div class="col-sm-2">
+         <label>Limit</label><select name="limit" class="form-control">
+            <option value="10" selected="selected">10 items</option>
+            <option value="20" >20 items</option>
+            <option value="50">50 items</option>
+            <option value="100">100 items</option>
+      </select><br></div>
+    </div></form></div>
+         <form action="/client/deleteClient" id="clientForm"  method="post" onsubmit="return confirmDelete();" role="form">
+          <div id="results-table">
+            <table class="table table-hover table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th style="background-color: darkgray;"><label class="checkbox-inline">
+                        <input type="checkbox" id="selectAll" value="option1"> 
+                      </label></th>
+                  <th style="background-color: darkgray;">User Name</th>
+                  <th style="background-color: darkgray;">E-Mail</th>
+                  <th style="background-color: darkgray;">Phone Number</th>
+                </tr>
+              </thead>
+              <tbody id = "clientlist"></tbody>
+            </table>
+            <input type=submit id="save_details" class="btn btn-danger"  align="right" value='Delete selected'></input>
+         <ul class="pager">
+  		<div id = "page"></div>
+	 </ul>
+          </form>
+     </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+  </body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+  <script src="/javascripts/socket.io.js"></script>
+  <script type="text/javascript">
+      jQuery(document).ready(function($) {
+      });
+   function getDid(){
+         var client_name = $("#clientName option:selected").val();
+         var dataString = '&client_name=' + client_name ;
+         window.status = "Please wait...";
+         document.body.style.cursor = "wait";
+         $.ajax({
+                    
+                    type: "POST",
+                    url: "/did/getDid",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       //alert(msg);
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       document.getElementById("didNumber").innerHTML = msg;              
+        
+                    }
+   });
+
+   }
+   function checkConnection(){
+       var ip_address = $("#didNumber option:selected").text();
+       ip_address = ip_address.split("->");
+       document.getElementById("ip_address").value = ip_address[1];
+       //alert('http://'+ip_address[1]+':9030');
+       /*var socket = io.connect('http://192.168.1.101:9030');
+            socket.on('connect',function(socket){
+              alert("Conneceted Namah SHivaya");
+            });*/
+
+       var socket = io.connect('http://'+ip_address[1]+':9030',{'force new connection': true});
+       socket.on('connect', function(){
+              socket.emit('check connection', {msg : '192.168.1.101'});
+              socket.on('connection checked', function(data){
+               //alert("NMS" + data['msg']);
+               document.getElementById("online").innerHTML = '<button type="button" class="btn btn-success">Online</button>';
+               socket.disconnect();
+              });
+              //socket.on('disconnect', function(){});
+        });
+
+   }
+        </script>
+       <div class="page-header">
+         <h3>Add Account</h2>
+       </div>
+       <div id="online">
+            <button type="button"  class="btn btn-danger">OFFLINE</button>
+       </div>
+
+          <div class="table-responsive">
+           <form action="/account_summary/addAccount" method="post" role="form">
+
+              <div class="form-group">
+                  <label for="Username">Client Name</label>
+                  <select  name='client_name' id= 'clientName' class="form-control" onchange="getDid();" >
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="DidNumber">Did Number </label> 
+                  <select  name='did_number' id="didNumber" class="form-control" onchange="checkConnection();">
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="TotCredit">Total Credit </label> 
+                  <input type="text" class="form-control" name="tot_credit" placeholder="Enter Credentials" required="">
+                  <input type="hidden" class="form-control" id = "ip_address" name="ip_address" placeholder="Enter Credentials" required="">
+              </div>
+              <div class="form-group">
+                  <label for="PulseRate">Pulse Rate</label>
+                  <input type="text" class="form-control" name="pulse" placeholder="Enter The Pulse Rate" required="">
+              </div>
+              <div class="form-group">
+                  <label for="ValidUpto">Valid Upto</label>
+                  <input size="16" type="text" id="account_validity" class="form-control form_datetime" readonly > 
+             </div>
+              <div class="form-actions pull-right"> 
+                  <input type=submit id="add" class="btn btn-primary" align="right" value='Add'></input>
+                  <input type=reset class="btn" value="Reset">
+              </div>
+           </form>
+          </div>
+    </div>
+    </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="/stylesheets/datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/stylesheets/datetimepicker/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+        showMeridian: 1
+    });
+</script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+  </body>
+</html>

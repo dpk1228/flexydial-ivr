@@ -1,0 +1,74 @@
+  <script src="/javascripts/socket.io.js"></script>
+  <script type="text/javascript">
+      jQuery(document).ready(function($) {
+      });
+   function setCredit(){
+         var avail_balance = $("#fromAccount option:selected").text();
+         alert(avail_balance.split(":")[2]);
+         document.getElementById("trans_amount").max = avail_balance.split(":")[2];
+   }
+   function checkConnection(){
+       var ip_address = $("#didNumber option:selected").text();
+       ip_address = ip_address.split("->");
+       document.getElementById("ip_address").value = ip_address[1];
+       //alert('http://'+ip_address[1]+':9030');
+       /*var socket = io.connect('http://192.168.1.101:9030');
+            socket.on('connect',function(socket){
+              alert("Conneceted Namah SHivaya");
+            });*/
+
+       var socket = io.connect('http://'+ip_address[1]+':9030',{'force new connection': true});
+       socket.on('connect', function(){
+              socket.emit('check connection', {msg : '192.168.1.101'});
+              socket.on('connection checked', function(data){
+               //alert("NMS" + data['msg']);
+               document.getElementById("online").innerHTML = '<button type="button" class="btn btn-success">Online</button>';
+               socket.disconnect();
+              });
+              //socket.on('disconnect', function(){});
+        });
+
+   }
+        </script>
+    <div class="page-header"
+     <h2>Reallocate Account</h2>
+    <div id="online">
+     <button type="button"  class="btn btn-danger">OFFLINE</button>
+    </div>
+    </div>
+
+          <div class="table-responsive">
+           <form action="/account_summary/reallocateAccount" method="post" role="form">
+
+              <div class="form-group">
+                  <label for="FromAccount">From Account</label>
+                  <select  name='from_account' id= 'fromAccount' class="form-control" onchange="setCredit();" required="" >
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="ToAccount">To Account</label> 
+                  <select  name='to_account' id="toAccount" class="form-control" onchange="checkConnection();" required="">
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="TransCredit">Tranfer Amount</label> 
+                  <input type="number" class="form-control" min="0" max= ""  id="trans_amount" name="trans_amount" placeholder="Enter Credentials" required="">
+              </div>
+              <div class="form-actions pull-right"> 
+                  <input type=submit id="add" class="btn btn-primary" align="right" value='Add'></input>
+                  <input type=reset class="btn" value="Reset">
+              </div>
+           </form>
+          </div>
+    </div>
+    </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+  </body>
+</html>

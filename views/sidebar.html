@@ -1,0 +1,66 @@
+  <div class="container-fluid">
+     <div id='alertMsg'></div>
+      <div class="row">
+ <div class="navbar" role="navigation">
+      <div class="container">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="navbar-container-top" href="#">Balance</a></li>
+            <li id="availabale_balance"><a class="navbar-container-top" href="#">₹<span id="balance">0.00</span></a></li>
+            <li> <button type="button" onclick="getBalance();"><img src="/img/refresh.gif" onmouseover="bigImg(this)" onmouseout="normalImg(this)" 
+     alt="refresh" style="vertical-align: super;padding-top: 11px;height: 32px;width: 24px;"></button></li>
+          </ul>
+      </div>
+    </div>
+
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar" style="padding-top: 22px;">
+            <li class="nav-header hidden-tablet"><b>MESSAGES</b></li>
+            <li><a href="/inbox">Inbox</a></li>
+            <li><a href="/voicemail">Voicemail</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li class="nav-header hidden-tablet"><b>CONTACTS</b></li>
+            <li><a href="/addressbook">Address book</a></li>
+            <li><a href="/stickyAgent">Sticky Agent</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li class="nav-header hidden-tablet"><b>APPLICATION</b></li>
+            <li><a href="/virtualReceptionist">Virtual Receptionist</a></li>
+            <li><a href="/missedCall">Missed Call</a></li>
+            <li><a href="/black_white_list">Black/White List</a></li>
+            <li><a href="/report">Reports</a></li>
+          </ul>
+        </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-0 main">
+<script type="text/javascript">
+function bigImg(x)
+{
+x.src="/img/refresh_hover.jpg";
+}
+
+function normalImg(x)
+{
+x.src="/img/refresh.gif";
+}
+function getBalance(){
+         window.status = "Please wait...";
+         document.body.style.cursor = "wait";
+         $.ajax({
+                    
+                    type: "POST",
+                    url: "/getBalance",
+                    success: function(msg)
+                    {
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       if(msg != 'NOT DONE'){
+                        document.getElementById("balance").innerHTML = msg;
+                       }
+                       else
+                        document.getElementById("balance").innerHTML = "00.00";
+                    }
+          });
+
+}
+getBalance();
+</script>

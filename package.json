@@ -1,0 +1,51 @@
+{
+  "author": "Vinay Yadav <vinay@buzzworks.com> (http://www.buzzworks.com/)",
+  "name": "flexydial-example",
+  "description": "Flexydial web app template using flatiron",
+  "version": "0.1.0",
+  "homepage": "http://www.flexydial.com",
+  "repository": {
+    "url": "https:"
+  },
+  "main": "./bin/server",
+  "config": {
+    "start": "./bin/server"
+  },
+  "scripts": {
+    "test": "vows test/*-test.js --spec",
+    "start": "./bin/server"
+  },
+  "dependencies": {
+    "connect": "~2.14.4",
+    "ecstatic": "0.4.x",
+    "flatiron": "^0.3.11",
+    "flatiron-passport": "0.0.9",
+    "formidable": "~1.0.14",
+    "jsftp": "^1.2.1",
+    "mongodb": "1.4.x",
+    "mongoose": "3.8.x",
+    "mongoose-paginate": "1.2.x",
+    "nconf": "0.6.x",
+    "passport-local": "0.1.x",
+    "plates": "0.4.x",
+    "socket.io": "^0.9.16",
+    "union": "0.3.x",
+    "util": "^0.10.3",
+    "xml2js": "^0.4.2",
+    "wkhtmltopdf": "^0.1.4",
+    "fast-csv": "^0.3.1",
+    "mime": "^1.2.11",
+    "socket.io-client": "^1.0.4",
+    "cron": "^1.0.4",
+    "nodemailer": "^0.6.5"
+  },
+  "devDependencies": {
+    "nock": "0.27.x",
+    "vows": "0.7.x"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "0.10.x"
+  },
+  "subdomain": "flexydial-example"
+}

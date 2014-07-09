@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+  <script type="text/javascript">
+  function confirmDelete(){
+             return confirm("Are You Sure Want To Delete This IVR !!!");
+  }
+  </script>
+    <div id="page-header">
+       <div class="page-header" id ="addDid_btn">
+            <!--<button  name="addClient" class="btn btn-lg btn-primary pull-right"  value="addClient" onclick="location.href='/did/addDid';">Add Client</button> -->
+       </div>
+            <h3>IVR List</h3>
+       </div>
+    <div id="filters">
+      <form class="filters"><div class="row"><div class="col-sm-3" name="search_client">
+         <label>Search by Client name</label><input name="client_name" type="text" class="form-control"></div>
+      <div class="col-sm-2">
+         <label>Sort By</label><select name="sort" class="form-control">
+            <option value="_id">id ▲</option>
+            <option value="-_id">id ▼</option>
+            <option value="did_number">did_number ▲</option>
+            <option value="-did_number">did number ▼</option>
+            <option value="client_name">client name ▲</option>
+            <option value="-client_name">client name ▼</option>
+        </select></div>
+      <div class="col-sm-2">
+         <label>Limit</label><select name="limit" class="form-control">
+            <option value="10" selected="selected">10 items</option>
+            <option value="20" >20 items</option>
+            <option value="50">50 items</option>
+            <option value="100">100 items</option>
+      </select><br></div>
+    </div></form></div>
+         <form action="/did/deleteDid" id="didForm"  method="post" onsubmit="return confirmDelete();" role="form">
+          <div id="results-table">
+            <table class="table table-hover table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th style="background-color: darkgray;"><label class="checkbox-inline">
+                        <input type="checkbox" id="selectAll" value="option1"> 
+                      </label></th>
+                  <th style="background-color: darkgray;">Hosting Number</th>
+                  <th style="background-color: darkgray;">Client Name</th>
+                  <th style="background-color: darkgray;">IP Address</th>
+                </tr>
+              </thead>
+              <tbody id = "didlist"></tbody>
+            </table>
+            <input type=submit id="save_details" class="btn btn-danger"  align="right" value='Delete selected'></input>
+         <ul class="pager">
+  		<div id = "page"></div>
+	 </ul>
+          </form>
+     </div>
+     </div>
+     </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+  </body>
+</html>

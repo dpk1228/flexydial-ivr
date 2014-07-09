@@ -1,0 +1,215 @@
+          <div class="table-responsive">
+              <div class="form-group col-sm-3">
+                  <label for="DID">Select Hosting Number</label>
+                  <select  id='didList' class="form-control" onchange="getBWList();" >
+                  </select>
+              </div>
+              <div class="form-group col-sm-3 hide" id="new-bw">
+                  <label for="DID">Select Black/White List</label>
+                  <select  id="bwlist" class="form-control" >
+                    <option value="blackList" selected>Black List</option>
+                    <option value="whiteList">White List</option>
+                  </select>
+              </div>
+              <br>
+              <div class="form-group col-sm-5 pull-right hide" id = "addBWforDid">
+               <button  name="blackWhiteList" class="btn btn-primary pull-right"  value="BlackWhiteListCreate" onclick="createBlackWhiteList();">Create Black List/White List for this Hosting Number</button>
+              </div>
+              <div class="form-group col-sm-5 pull-right hide" id = "addContact">
+               <button  name="addContactButton" class="btn btn-primary pull-right"   data-toggle="modal" data-target="#addContacts" value="addContact">Add Number</button>
+              </div>
+          </div>
+       <h3><div id = 'isBlackList'></div></h3>
+       <div id="results-table">
+           <table class="table table-hover table-bordered table-striped" id="blackWhiteList">
+           </table>
+       </div>
+       </div>
+<div class="modal fade" id="addContacts" tabindex="-1" role="dialog1" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title" id="myModalLabel">Add Contact into Black/White List</h3>
+      </div>
+      <div class="modal-body" style="padding-bottom: 86px;">
+        <form class="form-horizontal" action="#" id="#importListForm" role="form" method="post">
+              <div class="form-group">
+                 <label for="phoneNumber" class="col-sm-2 control-label">Phone Number</label>
+                   <div class="col-sm-10">
+                      <input type="number" class="form-control" id="phone_number" placeholder="Phone Number"><span class="hide help-inline" id="phone_required">This is required</span>
+                   </div>
+             </div>
+
+      </form>
+      </div>
+      <div class="modal-footer">
+       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+       <button class="btn btn-primary" data-dismiss="modal" id="addContactSubmit">ADD</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+     </div>
+    </div>
+
+
+  <script type="text/javascript">
+      var i = 2;
+      jQuery(document).ready(function($) {
+      });
+      function getBWList(){
+         var did = $("#didList option:selected").val();
+         var did_ip  = did.split(":"); 
+         did = did_ip[0];
+         if(did === ''){ 
+            alert("Please select the did!!");   
+            $("#addContact").addClass("hide");
+         }  
+         else{
+            var dataString = '&did='+ did ;
+            window.status = "Please wait...";
+            document.body.style.cursor = "wait";
+            $.ajax({
+                    
+                    type: "POST",
+                    url: "/getBWList",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       if(msg === 'NOT'){
+                          $("#new-bw").removeClass("hide");
+                          $("#addBWforDid").removeClass("hide");
+                          $("#addContact").addClass("hide");
+                       }
+                       if(msg === 'CREATED'){
+                          $("#new-bw").addClass("hide");
+                          $("#addBWforDid").addClass("hide");
+                          $("#addContact").removeClass("hide");
+                       }
+                       /* document.getElementById("alertMsg").innerHTML = '<div class="alert alert-success"><strong>Success ! </strong>'+list+' has been created for '+did+'.</div>';              
+                       }
+                       else{
+                        $("#new-bw").removeClass('hide');
+                       }*/
+                      getBWList_did(); 
+                    }
+      });
+
+           
+         }
+      }
+      
+      function createBlackWhiteList(){
+         var did = $("#didList option:selected").val();        
+         var list = $("#bwlist option:selected").val();
+         var did_ip  = did.split(":"); 
+         did = did_ip[0];
+         if(did === '') 
+            alert("Please eselect the did!!");     
+         else{
+            var dataString = '&did='+ did + '&listType='+list + '&ip_address='+did_ip[1] ;
+         //alert(data);
+         window.status = "Please wait...";
+         document.body.style.cursor = "wait";
+         $.ajax({
+                    
+                    type: "POST",
+                    url: "/createblackwhitelist",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       if(msg === 'DONE'){
+                       document.getElementById("alertMsg").innerHTML = '<div class="alert alert-success"><strong>Success ! </strong>'+list+' has been created for '+did+'.</div>';              
+                       getBWList();  
+                   }
+                       else        
+                        document.getElementById("alertMsg").innerHTML = '<div class="alert alert-danger"><strong>Success ! </strong>'+list+' has not been created.</div>';              
+                    }
+      });
+  
+         }   
+
+      }
+   $('#addContactSubmit').click(function(){
+    var phone_number = $('#phone_number').val();
+    if(parseInt(phone_number) < 7000000000 || parseInt(phone_number) > 9999999999)    
+           alert("Please enter a valid Number !");
+    else if ( phone_number === "") {
+      alert("Phone Number is required !!");
+      $('#phone_number').next('.help-inline').show();
+      return false;
+    }
+    else {
+      var did = $("#didList option:selected").val();        
+      var did_ip  = did.split(":"); 
+      did = did_ip[0];
+      alert(did_ip[2]);
+      var dataString = '&did='+did+'&phone_number='+ phone_number + '&ip_address='+did_ip[1];
+         window.status = "Please wait...";
+         document.body.style.cursor = "wait";
+         $.ajax({
+                    
+                    type: "POST",
+                    url: "/addIntoBWlist",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       if(msg === 'CREATED'){
+                        document.getElementById("alertMsg").innerHTML = '<div class="alert alert-success"><strong>Success ! </strong> Contacts has been added.</div>';              
+                       }
+                       else        
+                        document.getElementById("alertMsg").innerHTML = '<div class="alert alert-danger"><strong>Success ! </strong>Phone Number is already present !!</div>';              
+                        getBWList_did(); 
+                    }
+      });
+
+      //return true;
+    }
+   });
+
+      function getBWList_did(){
+         var did = $("#didList option:selected").val();
+         var did_ip  = did.split(":"); 
+         did = did_ip[0];
+        
+         if(did === '') 
+            alert("Please eselect the did!!");     
+         else{
+            var dataString = '&did='+ did ;
+            window.status = "Please wait...";
+            document.body.style.cursor = "wait";
+            $.ajax({
+                    
+                    type: "POST",
+                    url: "/getBWlist_did",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       msg = msg.split("@");
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       document.getElementById("isBlackList").innerHTML = msg[1];              
+                       document.getElementById("blackWhiteList").innerHTML = msg[0];              
+                    }   
+            });
+      } 
+
+   }
+        </script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="http://localhost:9090/socket.io/socket.io.js"></script>
+    <script src="/javascripts/delivery.js"></script>
+  </body>
+</html>

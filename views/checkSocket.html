@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/ico/favicon.png">
+
+    <title>Flexydial IVR</title>
+
+    <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+
+    <link href="/stylesheets/navbar-static-top.css" rel="stylesheet">
+  <script type="text/javascript">
+  function confirmDelete(){
+             return confirm("Are You Sure Want To Delete This IVR !!!");
+  }
+  </script>
+  </head>
+
+  <body>
+
+    <!-- Static navbar -->
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Flexydial</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/logout">logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">
+    <div id='alertMsg'></div>
+    <div id="header">
+      <form class="filters"><div class="row"><div class="col-sm-3">
+         <input type="text" id="ip_address" value="" >
+         <input type="button" onclick ="uploadResToClient()"  value=" Check Connection " >
+         
+
+      </form>
+     </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://localhost:9090/socket.io/socket.io.js"></script>
+    <script src="http://localhost:9090/socket.io/socket.io.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="/javascripts/app.js"></script>
+    <script src="/javascripts/delivery.js"></script>
+  </body>
+</html>

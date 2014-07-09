@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<include>
+  <context name="default">
+    <extension name="default" continue="true"/>
+    <extension name="10006">
+      <condition field="destination_number" expression="^10006$">
+        <action application="lua" data="/usr/share/freeswitch/scripts/demo_virtual_ivr.lua"/>
+      </condition>
+    </extension>
+    <extension name="10001">
+      <condition field="destination_number" expression="^10001$">
+        <action application="lua" data="/usr/share/freeswitch/scripts/virtual_ivr.lua"/>
+      </condition>
+    </extension>
+    <extension name="10002">
+      <condition field="destination_number" expression="^10002$">
+        <action application="lua" data="/usr/share/freeswitch/scripts/virtual_ivr.lua"/>
+      </condition>
+    </extension>
+    <extension name="">
+      <condition field="destination_number" expression="^$">
+        <action application="lua" data="/usr/share/freeswitch/scripts/missed_call_ivr.lua"/>
+      </condition>
+    </extension>
+    <extension name="">
+      <condition field="destination_number" expression="^$">
+        <action application="lua" data="/usr/share/freeswitch/scripts/missed_call_ivr.lua"/>
+      </condition>
+    </extension>
+    <extension name="1">
+      <condition field="destination_number" expression="^1$">
+        <action application="lua" data="/usr/share/freeswitch/scripts/missed_call_ivr.lua"/>
+      </condition>
+    </extension>
+    <extension name="1">
+      <condition field="destination_number" expression="^1$">
+        <action application="lua" data="/usr/share/freeswitch/scripts/missed_call_ivr.lua"/>
+      </condition>
+    </extension>
+    <extension name="1">
+      <condition field="destination_number" expression="^1$">
+        <action application="lua" data="/usr/share/freeswitch/scripts/missed_call_ivr.lua"/>
+      </condition>
+    </extension>
+    <extension name="10001">
+      <condition field="destination_number" expression="^10001$">
+        <action application="lua" data="/usr/share/freeswitch/scripts/missed_call_ivr.lua"/>
+      </condition>
+    </extension>
+    <extension name="10001">
+      <condition field="destination_number" expression="^10001$">
+        <action application="lua" data="/usr/share/freeswitch/scripts/missed_call_ivr.lua"/>
+      </condition>
+    </extension>
+  </context>
+</include>

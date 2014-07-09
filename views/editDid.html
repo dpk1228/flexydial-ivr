@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/ico/favicon.png">
+
+    <title>Edit IVR</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/navbar-static-top.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+
+  <script type="text/javascript">
+      jQuery(document).ready(function($) {
+      });
+
+      /*function clickedFun(){
+                    var data = {};
+                    var items = document.getElementsByTagName('td');
+                    var id = document.getElementById('uid').value;
+                    var email = document.getElementById('em').value;
+                    var username = items[1].innerHTML;
+                    data.id = uid;
+                    data.username = username;
+		    data.email = email;
+                    $.ajax({
+                          url: 'http://localhost:9090/admin/saveUser',
+                          data: { id: id, username:username, email:email },
+                          type: 'POST',
+                          });
+         }
+     function deleteUser() {
+                    var id = document.getElementById('uid').value;
+                    alert(id);
+                    $.ajax({
+                          url: 'http://localhost:9090/admin/deleteUser',
+                          data: {id: id},
+                          type: 'POST',
+                          });
+          } */
+     function deleteDid() {
+                       var r=confirm("Are You Sure Want To Delete This IVR !!!");
+                       if (r==true)
+                       {
+                       var form = document.getElementById('didForm');
+                       form.action = "/did/deleteDid";
+                       form.submit();
+                       }
+          }
+
+        </script>
+  </head>
+
+  <body>
+
+    <!-- Static navbar -->
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Flexydial</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/admin">Home</a></li>
+            <li class="active"><a href="/did">IVR</a></li>
+            <li><a href="/account_summary">Accounts</a></li>
+            <li><a href="/report">Report</a></li>
+            <li class="dropdown">
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="" id="username"></a></li>
+            <li><a href="/logout">logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="/did">IVR</a></li>
+      <li class="active">Edit IVR</li>
+    </ol>
+    <div id='alertMsg'></div>
+    <h2 class="sub-header">Edit IVR</h2>
+          <div class="table-responsive">
+          <form action="/did/saveDid" id="didForm"  method="post" role="form">
+              <div class="form-group">
+                  <label for="DID">Hosting Number</label>
+                  <div id='did_number'> </div>
+              </div>
+              <div class="form-group">
+                  <label for="Clientname">Client Name</label>
+                  <div id='clientName'> </div>
+              </div>
+              <div class="form-group">
+                  <label for="IpAddress"><div id='ip_label'></div></label>
+                  <div id='ip_address'> </div>
+              </div>
+              <div class="form-group">
+                  <label for="Active"> isActive</label>
+                  <select  name='isActive' class="form-control">
+                  </select>
+              </div>
+              <div id='_id'></div>
+              <div class="form-actions pull-right"> 
+                  <input type=submit id="save_details" class="btn btn-primary"  align="right" value='Save'></input>
+                  <input type=button id="delete_user" class="btn btn-danger"  onclick="deleteDid()" value='Delete'></input>
+              </div>
+           </form>
+          <button class="btn btn-primary" onclick="location.href='/did';">Back</button>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+  </body>
+</html>

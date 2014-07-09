@@ -1,0 +1,15 @@
+---
+applications:
+  .:
+    name: Flexydial Example
+    framework:
+      name: standalone
+      info:
+        mem: 64M
+        description: Standalone Application
+        exec:
+    command: ./bin/server
+    infra:
+    url:
+    mem: 1G
+    instances: 1

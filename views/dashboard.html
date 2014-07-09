@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/ico/favicon.png">
+
+    <title>Dailer</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/navbar-static-top.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Static navbar -->
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/dashboard">Flexydial</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/admin">Home</a></li>
+            <li><a href="/did">IVR</a></li>
+            <li><a href="/account_summary">Accounts</a></li>
+            <li><a href="/report">Report</a></li>
+            <li class="dropdown">
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown active">
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="username"> <b class="caret"></b></a>
+                 <ul class="dropdown-menu">
+                   <li><a href="/changeSetting">Change Settings</a></li>
+                   <li><a href="/changePassword">Change Password</a></li>
+                   <!--<li class="divider"></li>
+                   <li class="dropdown-header">Nav header</li>
+                   <li><a href="#">Separated link</a></li>
+                   <li><a href="#">One more separated link</a></li>-->
+                 </ul>
+               </li>
+            <li><a href="/logout">logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">
+    <div class="jumbotron">
+    <div id='alertMsg'></div>
+    <h3>Admin Control Panel</h3>
+
+    <div class="row">
+        <div class="col-sm-4">
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title">Application</h3>
+            </div>
+            <div class="panel-body">
+                <a href="/did/addDid" class="list-group-item">Host an IVR</a>
+                <a href="/extension" class="list-group-item">Super Receptionist</a>
+                <a href="/account_summary" class="list-group-item">Account Summary</a>
+            </div>
+          </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4">
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title">Reports</h3>
+            </div>
+            <div class="panel-body">
+                <a href="/report" class="list-group-item">Calls Detail Report</a>
+            </div>
+          </div>
+        </div><!-- /.col-sm-4 -->
+     </div>
+    </div>
+   </div> <!--/.div container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/javascripts/bootstrap.js"></script>
+  </body>
+</html>
+

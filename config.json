@@ -1,0 +1,17 @@
+{
+  "port": "9090",
+  "cryptoKey": "fl3xyd!al",
+  "mongoUri": "mongodb://localhost/flexydial-example",
+  "localUploadDir" : "/upload/", 
+  "remoteUploadDir" : "/usr/share/freeswitch/",
+  "remoteDialplanDir" : "/etc/freeswitch/vanilla/dialplan/",
+  "remoteDialplanName" : "Mydialplan.xml",
+  "ip_for_demo_ivr" : "localhost",
+  "ftp_username_demo_ivr" : "deepak",
+  "ftp_pwd_demo_ivr" : "deepak@123",
+  "virtualReceptionistScript" : "/usr/share/freeswitch/scripts/virtual_ivr.lua",
+  "demoVirtualReceptionistScript" : "/usr/share/freeswitch/scripts/demo_virtual_ivr.lua",
+  "missedCallScript" : "/usr/share/freeswitch/scripts/missed_call_ivr.lua",
+  "script_for_demo_ivr" : "/usr/share/freeswitch/scripts/demo_ivr.lua",
+  "syncPort" : "9030"
+}

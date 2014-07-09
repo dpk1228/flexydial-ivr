@@ -1,0 +1,47 @@
+    <div class='page-header'>
+      <h2 class="sub-header">Add Did for Virtual receptionist</h2>
+    </div>
+          <div class="table-responsive">
+           <form action="/did/addDid" method="post" role="form" enctype="multipart/form-data">
+              <div class="form-group">
+                  <label for="clientname">Hosting Number</label>
+                  <input type="text" class="form-control" name="did_number" placeholder="Enter Hosting number" required = "" >
+              </div>
+              <div class="form-group">
+                  <label for="Username">Client Name</label>
+                  <select  name='client_name' class="form-control" >
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="IpAddress">IP address</label>
+                  <input type="text" class="form-control" name="ip_address" placeholder="Enter IP Address" required = "">
+              </div>
+              <div class="form-group col-sm-5">
+                  <label for="Ftp_user">FTP User Name</label>
+                  <input type="text" class="form-control " name="ftp_user_name" placeholder="Enter Ftp User's Name" required = "">
+              </div>
+              <div class="form-group col-sm-5">
+                  <label for="Ftp_pass">FTP Password</label>
+                  <input type="password" class="form-control " name="ftp_password" placeholder="Enter Ftp User's Password" required = "">
+              </div>
+              <div id='_id'></div>
+              <div class="form-actions pull-right"> 
+                  <input type=submit id="add" class="btn btn-primary" align="right" value='Add'></input>
+                  <input type=reset class="btn" value="Reset">
+              </div>
+           </form>
+          </div>
+    </div>
+    </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="http://localhost:9090/socket.io/socket.io.js"></script>
+    <script src="/javascripts/delivery.js"></script>
+  </body>
+</html>

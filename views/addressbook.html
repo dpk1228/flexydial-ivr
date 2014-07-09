@@ -1,0 +1,489 @@
+       <div class="page-header" id="addressBookDiv">
+            <h3>Address Book</h3>
+       </div>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span4" style="padding-top: 14px;">
+      <!--Sidebar content-->
+     <div class="col-sm-4 col-md-4" style="border: 1px solid; padding-bottom:10px;">
+
+          <div style="padding-top: 22px;">
+            <b>Browse Lists</b>
+            <input class="btn btn-default pull-right" type="button" data-toggle="modal" data-target="#createList" value="Create List">
+            <div id="results-table">
+              <table class="table table-hover table-bordered table-striped" id="listAddress">
+              </table>
+            </div>
+          </div>
+        </div>
+
+    </div>
+    <div class="span1">
+      <!--Sidebar content-->
+     <div class="col-sm-1 col-md-1"></div>
+    </div>
+    <div class="span7">
+<div class="col-sm-7 col-md-7" style="border: 1px solid; padding-bottom:10px;">
+          <div style="padding-top: 22px;">
+            <b>Browse All Contacts</b>
+            <input class="btn btn-primary pull-right" type="button" data-toggle="modal" data-target="#addContacts" value="Add Contact">
+            <input class="btn btn-default pull-right" type="button"  data-toggle="modal" data-target="#importAddressBook"  value="Import">
+            <form class="filters"><div class="row">
+            <div class="col-sm-4">
+              <label>Search</label><input name="client_name" type="text" > </div>
+            <div class="col-sm-2">
+              <label>Limit</label><select name="limit">
+                <option value="10" selected="selected">10 items</option>
+                <option value="20" >20 items</option>
+                <option value="50">50 items</option>
+                <option value="100">100 items</option>
+              </select><br></div>
+            </div></form>
+            <ul class="pager">
+                <div id = "pagination"></div>
+            </ul>
+           </div>
+            <div id="results-table">
+              <table class="table table-hover table-bordered table-striped" id="showContacts">
+              </table>
+            </div>
+          </div>
+      <div id="csvImport">
+     </div>
+        </div>
+
+      <!--Body content-->
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="createList" tabindex="-1" role="dialog1" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title" id="myModalLabel">Create Empty List</h3>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="/createList" id="createListForm" role="form" method="post">
+          <div class="form-group">
+            <label for="Name" class="col-sm-2 control-label">List Name</label>
+            <div class="col-sm-10">
+             <input type="text" class="form-control" id="list_name" placeholder="Enter The List Name">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+       <button class="btn btn-primary" data-dismiss="modal" id="createListSubmit">Create List</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addContacts" tabindex="-2" role="dialog2" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title" id="myModalLabel">Add Contact</h3>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="/addContact" id="addContactForm" role="form" method="post">
+          <div class="form-group">
+            <label for="Name" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+             <input type="text" class="form-control" id="name" placeholder="Enter The Name">
+            </div>
+         </div>
+         <div class="form-group">
+           <label for="phoneNumber" class="col-sm-2 control-label">Phone Number</label>
+             <div class="col-sm-10">
+               <input type="number" class="form-control" id="phone_number" placeholder="Phone Number"><span class="hide help-inline" id="phone_required">This is required</span>
+             </div>
+        </div>
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+             <input type="email" class="form-control" id="email" placeholder="Email">
+            </div>
+         </div>
+         <div class="form-group">
+           <label for="company" class="col-sm-2 control-label">Company</label>
+             <div class="col-sm-10">
+               <input type="text" class="form-control" id="company" placeholder="Comapny">
+             </div>
+        </div>
+     </form>
+      </div>
+      <div class="modal-footer">
+       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+       <button class="btn btn-primary" data-dismiss="modal" id="addContactSubmit">ADD</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="importAddressBook" tabindex="-3" role="dialog3" aria-labelledby="myModalLabel3" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title" id="myModalLabel">Import CSV</h3>
+      </div>
+      <div class="modal-body" style="padding-bottom: 86px;">
+        <form class="form-horizontal" action="/saveAddress" id="#importListForm" role="form" method="post">
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-3 control-label">CSV File</label>
+            <div class="col-sm-8">
+             <input type="file" class="form-control" id="importCsvFile" title="upoad csv file" required = "">
+            </div>
+         </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div>
+    </div>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script  type="text/javascript">
+var list = 'all';
+/*var data = [["name1", "city1", "some other info"], ["name2", "city2", "more info"]];
+var csvContent = "data:text/csv;charset=utf-8,";
+data.forEach(function(infoArray, index){
+   dataString = infoArray.join(",");
+   csvContent += index < infoArray.length ? dataString+ "\n" : dataString;
+   alert(csvContent);
+}); 
+var encodedUri = encodeURI(csvContent);
+var link = document.createElement("a");
+link.setAttribute("href", encodedUri);
+link.setAttribute("download", "my_data.csv");
+link.click();*/
+           //document.getElementById("transcription").innerHTML = trans;
+        function addContact(phone_number){
+           document.getElementById("phone_number").value = phone_number;
+           $('#editaddressBook').modal('show');
+        }
+        function getTranscription(trans){
+           document.getElementById("transcription").innerHTML = trans;
+           $('#myTranscription').modal('show');
+        }
+        function setListName(){
+              var listName = $("#selectList option:selected").val();
+              if(listName ==="createNew"){
+                 document.getElementById("list_name_imp").value = "";
+                 $('#listNameDiv').show();
+              }
+              else{
+                 document.getElementById("list_name_imp").value = listName;
+                 $('#listNameDiv').hide();
+                 }
+              //alert(listName);
+        }
+  $( document ).ready(function() {
+   $('#listAddress').on('click', 'tbody tr', function(event) {
+    $(this).addClass('info').siblings().removeClass('info');
+   });
+   $('#InfroTextSubmit').click(function(){
+    if ($('#phone_number').val()==="") {
+      alert("Phone Number is required !!");
+      $('#phone_number').next('.help-inline').show();
+      return false;
+    }
+    else {
+       $('#editContact').submit();
+      return true;
+    }
+   });
+   $('#createListSubmit').click(function(){
+    if ($('#list_name').val()==="") {
+      alert("List Name is required !!");
+      $('#phone_number').next('.help-inline').show();
+      return false;
+    }
+    else {
+        var dataString = '&list_name='+ document.getElementById("list_name").value ;
+         //alert(data);
+         window.status = "Please wait...";
+         document.body.style.cursor = "wait";
+         $.ajax({
+                    
+                    type: "POST",
+                    url: "/createList",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       //alert(msg);
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       msg = msg.split(":");
+                       //alert(msg[0]);
+                       //alert(msg[1]);
+                       if(msg[0] === 'DONE'){
+                        document.getElementById("alertMsg").innerHTML = '<div class="alert alert-success"><strong>Success ! </strong> List has been created.</div>';              
+                        document.getElementById("listAddress").innerHTML = msg[1];              
+                        
+                       }
+                       else        
+                        document.getElementById("alertMsg").innerHTML = '<div class="alert alert-danger"><strong>Success ! </strong> List has not been created.</div>';              
+                    }
+      });
+
+
+       //$('#createListForm').submit();
+      return true;
+    }
+   });
+   $('#addContactSubmit').click(function(){
+    if ($('#phone_number').val()==="") {
+      alert("Phone Number is required !!");
+      $('#phone_number').next('.help-inline').show();
+      return false;
+    }
+    else {
+      // $('#addContactForm').submit();
+        //alert(list);
+        var list_name = '&list_name='+ list ;
+        var name = '&name='+ document.getElementById("name").value ;
+        var phone_number = '&phone_number='+ document.getElementById("phone_number").value ;
+        var email = '&email='+ document.getElementById("email").value ;
+        var company = '&company='+ document.getElementById("company").value ;
+        var dataString = name + phone_number + email + company + list_name;
+        //alert(dataString);
+         window.status = "Please wait...";
+         document.body.style.cursor = "wait";
+         $.ajax({
+                    
+                    type: "POST",
+                    url: "/addContact",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       //alert(msg);
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       if(msg === 'DONE'){
+                        document.getElementById("alertMsg").innerHTML = '<div class="alert alert-success"><strong>Success ! </strong> Contacts has been added.</div>';              
+                        getContactsOfList(list); 
+                       }
+                       else        
+                        document.getElementById("alertMsg").innerHTML = '<div class="alert alert-danger"><strong>Success ! </strong>Phone Number is already present !!</div>';              
+                        getContactsOfList(list); 
+                    }
+      });
+
+      //return true;
+    }
+   });
+   $('#importListSubmit').click(function(){
+    if(document.getElementById("importCsvFile").value === ""){
+      alert("Please select a csv file !!");
+      return false;
+    }
+    /*else if ($('#list_name_imp').val()==="") {
+      alert("List Name is required !!");
+      $('#aa').next('.help-inline').show();
+      return false;
+    }
+    else {
+       $('#importListForm').submit();
+      return true;
+    }*/
+   });
+   });
+    </script>
+<script>
+  $(document).ready(function() {
+    if(isAPIAvailable()) {
+      $('#importCsvFile').bind('change', handleFileSelect);
+    }
+  });
+
+  function isAPIAvailable() {
+    // Check for the various File API support.
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      // Great success! All the File APIs are supported.
+      return true;
+    } else {
+      // source: File API availability - http://caniuse.com/#feat=fileapi
+      // source: <output> availability - http://html5doctor.com/the-output-element/
+      document.writeln('The HTML5 APIs used in this form are only available in the following browsers:<br />');
+      // 6.0 File API & 13.0 <output>
+      document.writeln(' - Google Chrome: 13.0 or later<br />');
+      // 3.6 File API & 6.0 <output>
+      document.writeln(' - Mozilla Firefox: 6.0 or later<br />');
+      // 10.0 File API & 10.0 <output>
+      document.writeln(' - Internet Explorer: Not supported (partial support expected in 10.0)<br />');
+      // ? File API & 5.1 <output>
+      document.writeln(' - Safari: Not supported<br />');
+      // ? File API & 9.2 <output>
+      document.writeln(' - Opera: Not supported');
+      return false;
+    }
+  }
+
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+    var file = files[0];
+
+    // read the file metadata
+    var output = ''
+        output += '<span style="font-weight:bold;">' + escape(file.name) + '</span><br />\n';
+        output += ' - FileType: ' + (file.type || 'n/a') + '<br />\n';
+        output += ' - FileSize: ' + file.size + ' bytes<br />\n';
+        output += ' - LastModified: ' + (file.lastModifiedDate ? file.lastModifiedDate.toLocaleDateString() : 'n/a') + '<br />\n';
+
+    // read the file contents
+    printTable(file);
+
+    // post the results
+    $('#list').append(output);
+  }
+   function importAddress(data){
+         //var client_name = $("#clientName option:selected").val();
+         var dataString = '&dataString='+data ;
+         window.status = "Please wait...";
+         document.body.style.cursor = "wait";
+         $.ajax({
+                    
+                    type: "POST",
+                    url: "/importAddress",
+                    data: { contacts :  data , list_name : list},
+                    success: function(msg)
+                    {
+                       //alert(msg);
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       //document.getElementById("didNumber").innerHTML = msg;              
+                       $('#importAddressBook').modal('hide');
+                       getContactsOfList(list); 
+        
+                    }
+   });
+
+   }
+
+
+  function printTable(file) {
+    var reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = function(event){
+      var csv = event.target.result;
+      //document.getElementById("csvImport").innerHTML = csv;              
+     
+      var data = $.csv.toArrays(csv);
+       
+      /*if(data[0][0] !="Name" || data[0][2] !="Phone" || data[0][3] !="Email")
+          alert("Format is not Correct !!");
+      else*/{
+      /*var html = '';
+      for(var row in data) {
+        html += '<tr>\r\n';
+        for(var item in data[row]) {
+          html += '<td>' + data[row][item] + '</td>\r\n';
+        }
+        html += '</tr>\r\n';
+      }*/
+/*var csvContent = "data:text/csv;charset=utf-8,";
+data.forEach(function(infoArray, index){
+   dataString = infoArray.join(",");
+   alert(dataString);
+   csvContent += index < infoArray.length ? dataString+ "\n" : dataString;
+});*/ 
+/*var encodedUri = encodeURI(csvContent);
+var link = document.createElement("a");
+link.setAttribute("href", encodedUri);
+link.setAttribute("download", "my_data.csv");
+link.click();
+*/
+           //document.getElementById("transcription").innerHTML = trans;
+     // $('#contents').html(data);
+    $('#list').append(JSON.stringify(data[0][0]));
+      importAddress(JSON.stringify(data));
+     }
+    };
+    reader.onerror = function(){ alert('Unable to read ' + file.fileName); };
+  }
+  
+  function getContactsOfList(list_name,skip,limit){
+        list = list_name;
+        if(typeof skip === 'undefined')
+           skip = '1';
+        if(typeof limit === 'undefined')
+           limit = '10';
+        //alert(skip+":"+limit);
+        var dataString = '&list_name='+ list_name +'&skip='+skip + '&limit'+limit  ;
+         window.status = "Please wait...";
+         document.body.style.cursor = "wait";
+         $.ajax({
+                    
+                    type: "POST",
+                    url: "/getContacts",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       msg = msg.split(":");
+                       if(msg[0] === 'DONE'){
+                        document.getElementById("showContacts").innerHTML = msg[1];              
+                        document.getElementById("pagination").innerHTML = msg[2];              
+                       }
+                    }
+          });
+  }
+  function getDowloadList(list_name){
+      list = list_name;
+        var dataString = '&list_name='+ list_name  ;
+         window.status = "Please wait...";
+         document.body.style.cursor = "wait";
+         $.ajax({
+                    
+                    type: "POST",
+                    url: "/getDowloadList",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       if(msg != 'NOT DONE'){
+                        //document.getElementById("csvImport").innerHTML = msg;
+                        var obj = JSON.parse(msg);
+                        fileName = list_name+".csv";
+                        var csvContent = "data:text/csv;charset=utf-8,";
+                        csvContent += "Name,Phone Number,Email,List Name\n"
+                        for(i=0;i<obj.length;i++)
+                         {
+                             if(typeof obj[i].list_name === 'undefined')
+                                 obj[i].list_name = "";
+                             csvContent += obj[i].name +","+ obj[i].phone_number +","+ obj[i].email +","+ obj[i].list_name +"\n";
+                             //alert(csvContent);
+                         }
+                          var encodedUri = encodeURI(csvContent);
+                          var link = document.createElement("a");
+                          link.setAttribute("href", encodedUri);
+                          link.setAttribute("download",fileName);
+                          link.click();             
+                       }
+                    }
+          });
+
+  }
+</script>
+
+    <script src="/javascripts/jquery.csv.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+  </body>
+</html>

@@ -1,0 +1,232 @@
+          <div class="table-responsive">
+              <div class="form-group col-sm-3">
+                  <label for="DID">Select Hosting Number</label>
+                  <select  id='didList' class="form-control" onchange="showCreateLink();" >
+                  </select>
+              </div>
+              <div class="hide" id = "createButton">
+                 <div class="form-group col-sm-3 " id="new-sticky">
+                  <label for="DID">Incoming Phone Number</label>
+                  <input type="text" class="form-control" id="incoming_phone_number" placeholder="Enter Incoming Phone Number" > 
+                 </div>
+                 <div class="form-group col-sm-3 " id="new-sticky">
+                  <label for="DID">Forwarding Phone Number</label>
+                  <input type="text" class="form-control" id="forwarding_phone_number" placeholder="Enter Forwarding Phone Number" > 
+                 </div>
+              <br>
+              <div class="form-group col-sm-3 pull-right" >
+               <button  id="addStickyAgentSubmit" class="btn btn-primary pull-right" >Add to List</button>
+              </div>
+              </div>
+              <div class="form-group col-sm-5 pull-right hide" id = "addContact">
+               <button  name="addContactButton" class="btn btn-primary pull-right"   data-toggle="modal" data-target="#addContacts" value="addContact">Add Number</button>
+              </div>
+          </div>
+       <br>
+       <div id="results-table" class="hide">
+           <br>
+           <h3><div id = 'isBlackList'></div></h3>
+           <table class="table table-hover table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th style="background-color: darkgray;"><label class="checkbox-inline">
+                        <input type="checkbox" id="selectAll" value="option1">
+                      </label></th>
+                  <th style="background-color: darkgray;">Hosting Number</th>
+                  <th style="background-color: darkgray;">Forwarding Number</th>
+                </tr>
+              </thead>
+              <tbody id = "blackWhiteList"></tbody>
+           </table>
+       </div>
+       </div>
+<div class="modal fade" id="addContacts" tabindex="-1" role="dialog1" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title" id="myModalLabel">Edit Sticky Agent</h3>
+        <h4 class="modal-title"><div id="did_num"></div></h4>
+      </div>
+      <div class="modal-body" style="padding-bottom: 86px;">
+        <form class="form-horizontal" action="#" id="saveStickyAgents" role="form" method="post">
+              <div class="form-group">
+                 <label for="phoneNumber" class="col-sm-5 control-label">Incoming Phone Number</label>
+                   <div class="col-sm-5">
+                      <input type="number" class="form-control" id="edit_inc_phone_number" placeholder="Incoming Phone Number" required><span class="hide help-inline" id="phone_required">This is required</span>
+                   </div>
+                   </div>
+              <div class="form-group">
+                 <label for="phoneNumber" class="col-sm-5 control-label">Forwarding Phone Number</label>
+                   <div class="col-sm-5">
+                      <input type="number" class="form-control" id="edit_frwd_phone_number" placeholder="Incoming Phone Number" required><span class="hide help-inline" id="phone_required">This is required</span>
+             </div>
+                   </div>
+
+      <div class="modal-footer">
+       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+       <input type=submit id="add" class="btn btn-primary" align="right" value='SAVE'></input>
+      </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+     </div>
+    </div>
+
+
+  <script type="text/javascript">
+      var i = 2;
+      var did_number = '';
+      var ip_address_g ='';
+      var inc_number = '';
+      jQuery(document).ready(function($) {
+      });
+      $(document).ready(function(){
+         $("#saveStickyAgents").submit(function(){
+          alert("Namah SHivaya!!");
+          incoming_phone_number = document.getElementById("edit_inc_phone_number").value;              
+          forwarding_phone_number = document.getElementById("edit_frwd_phone_number").value ; 
+          alert(did_number + ":"+ incoming_phone_number + ":"+ forwarding_phone_number);
+          $("#addContacts").modal('hide') ;
+          var dataString = '&did='+did_number+'&incoming_phone_number='+ incoming_phone_number + '&forwarding_phone_number='+forwarding_phone_number+'&ip_address='+ip_address_g+'&hosting='+inc_number ;
+         window.status = "Please wait...";
+         document.body.style.cursor = "wait";
+         $.ajax({
+                    
+                    type: "POST",
+                    url: "/saveStickyAgent",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       if(msg === 'CREATED'){
+                        document.getElementById("alertMsg").innerHTML = '<div class="alert alert-success"><strong>Success ! </strong> Contacts has been added.</div>';              
+                       }
+                       else if(msg === 'NO CONNECTION'){       
+                        document.getElementById("alertMsg").innerHTML = '<div class="alert alert-danger"><strong>Sorry ! </strong>Cannot connect to Server !!</div>';              
+                       }
+                       else{       
+                        document.getElementById("alertMsg").innerHTML = '<div class="alert alert-danger"><strong>Success ! </strong>Phone Number is already present !!</div>';              
+                       }
+                       showStickyAgent();
+                       return false;
+                    }
+      });
+       return false;
+
+        });
+      });
+
+      function showCreateLink(){
+         var did = $("#didList option:selected").val();
+         showStickyAgent();
+         var did_ip  = did.split(":"); 
+         did = did_ip[0];
+         did_number = did;
+         ip_address_g = did_ip[1];
+         if(did === ''){ 
+            alert("Please select the did!!");   
+            $("#createButton").addClass("hide");
+            $("#results-table").addClass("hide");
+         }  
+         else{
+            $("#createButton").removeClass("hide");
+            $("#results-table").removeClass("hide");
+         }
+      }
+      
+   $('#addStickyAgentSubmit').click(function(){
+    var incoming_phone_number = $('#incoming_phone_number').val();
+    var forwarding_phone_number = $('#forwarding_phone_number').val();
+    /*if(parseInt(phone_number) < 7000000000 || parseInt(phone_number) > 9999999999)    
+           alert("Please enter a valid Number !");
+    else*/ if ( incoming_phone_number === "") {
+      alert("Phone Number is required !!");
+      $('#incoming_phone_number').next('.help-inline').show();
+      return false;
+    }
+    else {
+      var did = $("#didList option:selected").val();        
+      var did_ip  = did.split(":"); 
+      did = did_ip[0];
+      var dataString = '&did='+did+'&incoming_phone_number='+ incoming_phone_number + '&forwarding_phone_number='+forwarding_phone_number+'&ip_address='+did_ip[1];
+         window.status = "Please wait...";
+         document.body.style.cursor = "wait";
+         $.ajax({
+                    
+                    type: "POST",
+                    url: "/addStickyAgent",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       if(msg === 'CREATED'){
+                        document.getElementById("alertMsg").innerHTML = '<div class="alert alert-success"><strong>Success ! </strong> Contacts has been added.</div>';              
+                       }
+                       else if(msg === 'NO CONNECTION'){       
+                        document.getElementById("alertMsg").innerHTML = '<div class="alert alert-danger"><strong>Sorry ! </strong>Cannot connect to Server !!</div>';              
+                       }
+                       else{       
+                        document.getElementById("alertMsg").innerHTML = '<div class="alert alert-danger"><strong>Success ! </strong>Phone Number is already present !!</div>';              
+                       }
+                       showStickyAgent();
+                    }
+      });
+
+      //return true;
+    }
+   });
+
+      function showStickyAgent(){
+         var did = $("#didList option:selected").val();
+         var did_ip  = did.split(":"); 
+         did = did_ip[0];
+        
+         if(did === '') 
+            alert("Please eselect the did!!");     
+         else{
+            var dataString = '&did='+ did + '&ip_address='+did_ip[1];
+            window.status = "Please wait...";
+            document.body.style.cursor = "wait";
+            $.ajax({
+                    
+                    type: "POST",
+                    url: "/showStickyAgent",
+                    data: dataString,
+                    success: function(msg)
+                    {
+                       //msg = msg.split("@");
+                       window.status = "Done";
+                       document.body.style.cursor = "default";
+                       document.getElementById("isBlackList").innerHTML = "Sticky Agents";              
+                       document.getElementById("blackWhiteList").innerHTML = msg;              
+                    }   
+            });
+      } 
+
+   }
+   function editStickyAgent(hosting,forwarding){
+      var did = $("#didList option:selected").val();
+      var did_ip  = did.split(":");
+      did = did_ip[0];
+      inc_number = hosting;
+      document.getElementById("did_num").innerHTML = did_number;              
+      document.getElementById("edit_inc_phone_number").value = hosting;              
+      document.getElementById("edit_frwd_phone_number").value = forwarding;              
+      $("#addContacts").modal('show') ;
+   }
+        </script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="http://localhost:9090/socket.io/socket.io.js"></script>
+    <script src="/javascripts/delivery.js"></script>
+  </body>
+</html>

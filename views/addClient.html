@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/ico/favicon.png">
+
+    <title>Add Client</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/navbar-static-top.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+
+  <script type="text/javascript">
+      jQuery(document).ready(function($) {
+      });
+        </script>
+  </head>
+
+  <body>
+
+    <!-- Static navbar -->
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Flexydial</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="" id="username"></a></li>
+            <li><a href="logout">logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="/admin">Client</a></li>
+      <li class="active">AddClient</li>
+    </ol>
+
+    <div id='alertMsg'></div>
+    <h2 class="sub-header">Add Client</h2>
+
+          <div class="table-responsive">
+           <form action="/client/addClient" method="post" role="form">
+              <div class="form-group">
+                  <label for="clientname">Client Name</label>
+                  <input type="text" class="form-control" name="client_name" placeholder="Enter client name">
+              </div>
+              <div class="form-group">
+                  <label for="Address">Address</label>
+                  <input type="address" class="form-control" name="address" placeholder="Enter Address">
+              </div>
+              <div class="form-group">
+                  <label for="Email">Email address</label>
+                  <input type="email" class="form-control" name="email" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                  <label for="Phone">Phone Number</label>
+                  <input type="text" class="form-control bfh-number" name="phone" placeholder="Enter Phone Number">
+              </div>
+              <div class="form-group">
+                  <label for="Contact Person">Contact Person</label>
+                  <input type="text" class="form-control" name="contact_person" placeholder="Enter the name of immediate contactable person">
+              </div>
+              <div class="form-group">
+                  <label for="Contact_phone">Contact Person's Phone Number</label>
+                  <input type="text" class="form-control bfh-number" name="contact_phone" placeholder="Enter the Phone number of immediate contactable person">
+              </div>
+              <div id='_id'></div>
+              <div class="form-actions pull-right"> 
+                  <input type=submit id="add" class="btn btn-primary" align="right" value='Add'></input>
+                  <input type=reset class="btn" value="Reset">
+              </div>
+           </form>
+          </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+  </body>
+</html>

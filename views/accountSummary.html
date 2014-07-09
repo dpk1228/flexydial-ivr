@@ -1,0 +1,44 @@
+  <script type="text/javascript">
+  function confirmDelete(){
+             return confirm("Are You Sure Want To Delete This IVR !!!");
+  }
+  </script>
+    <div id="page-header">
+       <div id="addAccount">
+       </div>
+       <div id="reallocateAccount">
+       </div>
+            <h1>Account Summary</h1>
+   </div>
+         <form action="/account_summary/deletAccount" id="accountForm"  method="post" onsubmit="return confirmDelete();" role="form">
+          <div id="results-table">
+            <table class="table table-hover table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th style="background-color: darkgray;"><label class="checkbox-inline">
+                        <input type="checkbox" id="selectAll" value="option1"> 
+                      </label></th>
+                  <th style="background-color: darkgray;">Client Id</th>
+                  <th style="background-color: darkgray;">Hosting Number</th>
+                  <th style="background-color: darkgray;">Initial Credit</th>
+                  <th style="background-color: darkgray;">Balance</th>
+                  <th style="background-color: darkgray;">Pulse Rate</th>
+                </tr>
+              </thead>
+              <tbody id = "accountSummary"></tbody>
+            </table>
+         <ul class="pager">
+  		<div id = "page"></div>
+	 </ul>
+          </form>
+     </div>
+     </div>
+     </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+  </body>
+</html>
